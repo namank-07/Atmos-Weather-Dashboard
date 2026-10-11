@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Atmos Weather Dashboard — search cities worldwide and check current weather and hourly forecasts.">
+  <title>Atmos — Weather Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Atmos home">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>atmos<span class="brand-dot">.</span></span>
+      </a>
+      <div class="topbar-label"><span class="live-dot"></span> WEATHER, A LITTLE CLEARER</div>
+      <button id="refreshButton" class="icon-button" type="button" aria-label="Refresh weather" title="Refresh weather">↻</button>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">YOUR WEATHER, REIMAGINED</p>
+      <h1>Feel the <span>atmosphere.</span></h1>
+      <p class="intro-copy">A little clarity for whatever the day brings.</p>
+    </section>
+
+    <section class="search-wrap" aria-label="Search for a city">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="cityInput" type="search" autocomplete="off" placeholder="Search any city in the world…" aria-label="City name">
+      <button id="searchButton" class="search-button" type="button">Search <span aria-hidden="true">↗</span></button>
+      <div id="searchResults" class="search-results" role="listbox" aria-label="City search results" hidden></div>
+    </section>
+    <p id="statusMessage" class="status-message" role="status" aria-live="polite">Search for a city to see its weather.</p>
+
+    <section id="weatherContent" class="weather-content" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">RIGHT NOW</p>
+          <h2 id="locationName">—</h2>
+          <p id="localDate" class="muted">—</p>
+        </div>
+        <span id="conditionBadge" class="condition-badge">Current conditions</span>
+      </div>
+
+      <article class="hero-card">
+        <div class="hero-weather">
+          <div id="weatherGlyph" class="weather-glyph" aria-hidden="true">☀</div>
+          <div>
+            <div class="temperature-line"><span id="temperature">—</span><span class="degree">°C</span></div>
+            <p id="conditionText" class="condition-text">—</p>
+            <p id="feelsLike" class="feels-like">Feels like —°</p>
+          </div>
+        </div>
+        <div class="hero-summary">
+          <p class="eyebrow">A QUICK LOOK</p>
+          <p id="weatherSummary">Live conditions for the location you selected.</p>
+          <div class="sunline"><span>☼</span> <span id="daylightLabel">Local time</span></div>
+        </div>
+      </article>
+
+      <div class="metric-grid">
+        <article class="metric-card"><span class="metric-icon">◌</span><p class="metric-label">Humidity</p><strong id="humidity">—</strong><span class="metric-sub">Relative humidity</span></article>
+        <article class="metric-card"><span class="metric-icon">↗</span><p class="metric-label">Wind speed</p><strong id="windSpeed">—</strong><span id="windDirection" class="metric-sub">Wind conditions</span></article>
+        <article class="metric-card"><span class="metric-icon">⌁</span><p class="metric-label">Feels like</p><strong id="metricFeelsLike">—</strong><span class="metric-sub">Perceived temperature</span></article>
+        <article class="metric-card"><span class="metric-icon">☂</span><p class="metric-label">Precipitation</p><strong id="precipitation">—</strong><span class="metric-sub">Current amount</span></article>
+      </div>
+
+      <section class="forecast-section">
+        <div class="section-heading compact">
+          <div><p class="eyebrow">COMING UP</p><h2>Hourly forecast</h2></div>
+          <span class="forecast-note">Next hours</span>
+        </div>
+        <div id="hourlyForecast" class="hourly-grid"></div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <span><span class="footer-star">✦</span> Atmos Weather Dashboard</span>
+      <span>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a></span>
+    </footer>
+  </main>
+  <script src="script.js" defer></script>
+</body>
+</html>
