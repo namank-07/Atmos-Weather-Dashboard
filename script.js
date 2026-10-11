@@ -172,19 +172,20 @@ async function searchCities() {
   }
 }
 
-function renderHourly(hourly) {
+function renderHourly(hourly, currentTimeValue) {
   elements.hourlyForecast.replaceChildren();
   const times = hourly?.time || [];
   const temperatures = hourly?.temperature_2m || [];
   const codes = hourly?.weather_code || [];
   const rain = hourly?.precipitation_probability || [];
-  const currentTime = hourly?.time?.[0];
   let startIndex = 0;
 
-  if (activeLocation && currentTime) {
-    const now = new Date();
-    const localCurrentHour = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:00`;
-    const exact = times.findIndex((time) => time >= localCurrentHour);
+  // Open-Meteo returns local clock times for the selected city. Use its
+  // current-time value instead of the viewer's device time (which may be in
+  // a different time zone).
+  if (currentTimeValue) {
+    const currentHourKey = currentTimeValue.slice(0, 13);
+    const exact = times.findIndex((time) => time.slice(0, 13) >= currentHourKey);
     if (exact >= 0) startIndex = exact;
   }
 
@@ -260,7 +261,7 @@ async function loadWeather(place) {
     elements.windDirection.textContent = cardinalDirection(current.wind_direction_10m);
     elements.metricFeelsLike.textContent = `${safeNumber(current.apparent_temperature)}°C`;
     elements.precipitation.textContent = `${safeNumber(current.precipitation, 1)} mm`;
-    renderHourly(data.hourly);
+    renderHourly(data.hourly, current.time);
 
     elements.weatherContent.hidden = false;
     setStatus(`Showing live weather for ${place.name}. Data provided by Open-Meteo.`);
